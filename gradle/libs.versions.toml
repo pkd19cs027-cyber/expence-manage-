@@ -17,7 +17,6 @@ securityCrypto = "1.1.0-alpha06"
 biometric = "1.2.0-alpha05"
 sqlcipher = "4.6.1"
 sqliteKtx = "2.4.0"
-mlkitTextRecognition = "19.0.1"
 junit = "4.13.2"
 kotlinTest = "2.0.21"
 androidxTestJunit = "1.2.1"
@@ -61,7 +60,6 @@ androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
 androidx-biometric = { module = "androidx.biometric:biometric-ktx", version.ref = "biometric" }
-mlkit-text-recognition = { module = "com.google.mlkit:text-recognition", version.ref = "mlkitTextRecognition" }
 
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlinTest" }

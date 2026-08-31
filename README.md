@@ -174,6 +174,6 @@ the first `assembleDebug` and an on-device pass as the remaining verification
 step.
 
 Not built yet, and deliberately scoped out of this pass: notification-based
-ingestion (Google Pay/PhonePe/Paytm posts), receipt OCR reconciliation (the ML
-Kit dependency is wired but no scanner screen exists), budgets UI, and encrypted
-export/import.
+ingestion (Google Pay/PhonePe/Paytm posts), receipt OCR reconciliation, budgets
+UI, and encrypted export/import. On-device OCR would be added with ML Kit when
+the scanner screen is built; the dependency is deliberately absent until then.

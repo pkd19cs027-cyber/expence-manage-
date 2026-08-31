@@ -95,9 +95,6 @@ dependencies {
     implementation(libs.androidx.security.crypto)
     implementation(libs.androidx.biometric)
 
-    // On-device OCR for receipts; no image ever leaves the phone.
-    implementation(libs.mlkit.text.recognition)
-
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.3")
 
     testImplementation(libs.junit)
