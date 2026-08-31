@@ -13,7 +13,7 @@ import java.util.concurrent.Executor
  */
 object BiometricGate {
 
-    private const val ALLOWED = BiometricManager.Authenticators.BIOMETRIC_WEAK or
+    private val ALLOWED = BiometricManager.Authenticators.BIOMETRIC_WEAK or
         BiometricManager.Authenticators.DEVICE_CREDENTIAL
 
     fun isAvailable(activity: FragmentActivity): Boolean =
