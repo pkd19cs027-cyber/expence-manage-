@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Nothing is backed up automatically. The ledger is derived from messages that
+  are already on the phone, and an unencrypted copy of it in a cloud backup
+  would undo the entire point of the app. Users export an encrypted file
+  themselves from Settings.
+-->
+<full-backup-content>
+    <exclude domain="database" path="." />
+    <exclude domain="sharedpref" path="." />
+    <exclude domain="file" path="." />
+</full-backup-content>
