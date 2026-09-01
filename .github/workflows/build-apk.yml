@@ -81,6 +81,25 @@ jobs:
           fi
           gh release upload apk-latest dist/kharcha-debug.apk --clobber
 
+      # The APK also lives in the repository itself at apk/kharcha-debug.apk,
+      # so it's there when the repo is cloned or browsed and doesn't depend on
+      # GitHub Releases. The commit message carries [skip ci] so this push
+      # does not retrigger the workflow.
+      - name: Commit the APK into the repository
+        if: github.ref_name == github.event.repository.default_branch || startsWith(github.ref_name, 'claude/')
+        run: |
+          mkdir -p apk
+          cp dist/kharcha-debug.apk apk/kharcha-debug.apk
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add apk/kharcha-debug.apk
+          if git diff --cached --quiet; then
+            echo "APK unchanged, nothing to commit."
+          else
+            git commit -m "[skip ci] Update bundled APK to $GITHUB_SHA"
+            git push origin "HEAD:${{ github.ref_name }}"
+          fi
+
       - name: Summary
         run: |
           {

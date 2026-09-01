@@ -10,3 +10,8 @@ captures/
 *.aab
 *.keystore
 !debug.keystore
+
+# The one APK that IS meant to be tracked: a built copy kept in the repo so it
+# can be installed straight from a clone or a raw.githubusercontent.com link,
+# independent of GitHub Releases. Kept in sync by .github/workflows/build-apk.yml.
+!apk/kharcha-debug.apk

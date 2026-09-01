@@ -155,9 +155,11 @@ windows, are in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 ## Install it on your phone
 
-Download the latest debug build and open it:
+Download the latest debug build and open it. Two identical copies are kept —
+use whichever loads faster for you:
 
-**[kharcha-debug.apk](https://github.com/pkd19cs027-cyber/expence-manage-/releases/download/apk-latest/kharcha-debug.apk)** (~40 MB)
+- **[GitHub Release](https://github.com/pkd19cs027-cyber/expence-manage-/releases/download/apk-latest/kharcha-debug.apk)** (~40 MB)
+- **[In-repo copy](https://github.com/pkd19cs027-cyber/expence-manage-/raw/main/apk/kharcha-debug.apk)** — [`apk/kharcha-debug.apk`](apk/kharcha-debug.apk), committed to the repository itself so it's there even without using Releases
 
 Android will ask for permission to install from your browser the first time —
 allow it, then open the APK again. On first launch the app asks for SMS access
@@ -166,6 +168,9 @@ and offers to read your existing inbox, which is where your history comes from.
 It is a debug build signed with Android's shared debug key: fine for your own
 phone, not something to distribute. Its package id is `com.kharcha.ledger.debug`,
 so it installs alongside a release build rather than replacing it.
+
+Both copies are rebuilt and republished automatically by CI on every push, so
+either link always points at the current `main`.
 
 ## Building it yourself
 
