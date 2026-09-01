@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Kharcha</string>
+    <string name="app_tagline">Your money, understood — entirely on this phone</string>
+
+    <string name="permission_title">Read your bank messages</string>
+    <string name="permission_body">Kharcha reads the transaction SMS your bank already sends you, on this device only. Nothing is uploaded, there is no account to create, and the app has no internet permission at all.</string>
+    <string name="permission_grant">Allow SMS access</string>
+    <string name="permission_skip">Add transactions manually instead</string>
+
+    <string name="accounts_found_title">We found these accounts</string>
+    <string name="accounts_found_body">Confirm which of these are yours. Money moving between your own accounts is a transfer, not spending — that is what keeps your reports honest.</string>
+
+    <string name="nav_dashboard">Home</string>
+    <string name="nav_transactions">Activity</string>
+    <string name="nav_review">Review</string>
+    <string name="nav_insights">Insights</string>
+    <string name="nav_accounts">Accounts</string>
+
+    <string name="unlock_title">Unlock Kharcha</string>
+    <string name="unlock_subtitle">Your ledger is encrypted on this device</string>
+</resources>

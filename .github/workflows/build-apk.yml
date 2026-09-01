@@ -1,0 +1,90 @@
+name: Build APK
+
+# The APK is built on GitHub's runners because they have the Android SDK
+# installed and can reach Google's Maven repository. The finished APK is
+# attached to a rolling "apk-latest" prerelease so it can be downloaded and
+# installed directly from a phone browser.
+on:
+  push:
+    branches:
+      - main
+      - 'claude/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Run the reconciliation engine tests
+        run: ./gradlew --no-daemon :engine:test
+
+      - name: Build the debug APK
+        run: ./gradlew --no-daemon :app:assembleDebug
+
+      - name: Name the APK
+        id: apk
+        run: |
+          mkdir -p dist
+          cp app/build/outputs/apk/debug/app-debug.apk dist/kharcha-debug.apk
+          echo "size=$(du -h dist/kharcha-debug.apk | cut -f1)" >> "$GITHUB_OUTPUT"
+
+      - name: Upload the APK as a build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kharcha-debug-apk
+          path: dist/kharcha-debug.apk
+          if-no-files-found: error
+
+      - name: Upload test and build reports on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            engine/build/reports/
+            app/build/reports/
+          if-no-files-found: ignore
+
+      # A rolling prerelease gives a stable, directly downloadable URL:
+      # https://github.com/<owner>/<repo>/releases/download/apk-latest/kharcha-debug.apk
+      - name: Publish the APK to the apk-latest release
+        if: github.ref_name == github.event.repository.default_branch || startsWith(github.ref_name, 'claude/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh release view apk-latest >/dev/null 2>&1; then
+            gh release create apk-latest \
+              --target "$GITHUB_SHA" \
+              --prerelease \
+              --title "Kharcha — latest debug build" \
+              --notes "Debug build of Kharcha, built from \`$GITHUB_SHA\`.
+
+          Install on Android: download \`kharcha-debug.apk\`, open it, and allow
+          installation from your browser when prompted. This is a debug build
+          signed with Android's shared debug key — fine for your own phone, not
+          for distribution."
+          fi
+          gh release upload apk-latest dist/kharcha-debug.apk --clobber
+
+      - name: Summary
+        run: |
+          {
+            echo "### APK built (${{ steps.apk.outputs.size }})"
+            echo
+            echo "Direct download: https://github.com/${{ github.repository }}/releases/download/apk-latest/kharcha-debug.apk"
+          } >> "$GITHUB_STEP_SUMMARY"
