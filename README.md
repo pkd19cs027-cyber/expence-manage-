@@ -153,25 +153,45 @@ windows, are in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 ---
 
-## Building
+## Install it on your phone
+
+Download the latest debug build and open it:
+
+**[kharcha-debug.apk](https://github.com/pkd19cs027-cyber/expence-manage-/releases/download/apk-latest/kharcha-debug.apk)** (~40 MB)
+
+Android will ask for permission to install from your browser the first time —
+allow it, then open the APK again. On first launch the app asks for SMS access
+and offers to read your existing inbox, which is where your history comes from.
+
+It is a debug build signed with Android's shared debug key: fine for your own
+phone, not something to distribute. Its package id is `com.kharcha.ledger.debug`,
+so it installs alongside a release build rather than replacing it.
+
+## Building it yourself
 
 Requires JDK 17+ and the Android SDK (compileSdk 35).
 
 ```bash
 ./gradlew :engine:test        # the reconciliation test suite
-./gradlew :app:assembleDebug  # the APK
+./gradlew :app:assembleDebug  # the APK, at app/build/outputs/apk/debug/
 ```
 
 The engine module builds and tests on any JDK 17+ with no Android SDK present,
 which is the intended way to work on parsing rules.
 
+Every push also builds the APK on GitHub Actions
+([`.github/workflows/build-apk.yml`](.github/workflows/build-apk.yml)) and
+republishes it to the `apk-latest` release, so the link above always points at
+the current branch build.
+
 ## Status
 
-The `:engine` module is complete and its test suite passes. The `:app` module is
-complete in source and is built with the Android SDK — it has not been assembled
-or run on a device in the environment this repository was written in, so treat
-the first `assembleDebug` and an on-device pass as the remaining verification
-step.
+The `:engine` module is complete and its 66 tests pass. The `:app` module
+compiles and packages into a signed, installable APK — that is what the link
+above is. What has *not* happened yet is a run on a real phone against real
+messages: the parsing rules are tested against a corpus of message shapes, not
+against your inbox, so expect the review queue to be the place where you correct
+the first few things it gets wrong.
 
 Not built yet, and deliberately scoped out of this pass: notification-based
 ingestion (Google Pay/PhonePe/Paytm posts), receipt OCR reconciliation, budgets
